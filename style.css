@@ -1,0 +1,686 @@
+/* --------------------------------------------------------
+   CSS VARIABLES (THEMING)
+   -------------------------------------------------------- */
+:root {
+  /* LIGHT THEME (Default) */
+  --bg-app: #f0f2f5;
+  /* Outer app background */
+  --bg-panel: #ffffff;
+  /* Control panel background */
+  --bg-primary: #ffffff;
+  /* Inside the post replica */
+  --bg-secondary: #fafafa;
+  --text-primary: #262626;
+  /* Main post text & usernames */
+  --text-secondary: #737373;
+  /* Timestamps, subtle info */
+  --text-link: #00376b;
+  /* Mentions, hashtags, 'more' button */
+  --border-color: #dbdbdb;
+  /* Divider lines */
+  --icon-color: #262626;
+  /* Default icon colors */
+  --icon-action: #ed4956;
+  /* Heart active color */
+  --dot-active: #0095f6;
+  /* Active pagination dot */
+  --dot-inactive: #a8a8a8;
+  /* Inactive pagination dots */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-bg: #efefef;
+  --input-border: #dbdbdb;
+  --btn-bg: #0095f6;
+  --btn-text: #ffffff;
+}
+
+[data-theme="dark"] {
+  /* DARK THEME */
+  --bg-app: #121212;
+  --bg-panel: #1e1e1e;
+  --bg-primary: #000000;
+  --bg-secondary: #121212;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a8a8a8;
+  --text-link: #e0f1ff;
+  --border-color: #262626;
+  --icon-color: #f5f5f5;
+  --icon-action: #ff3040;
+  --dot-active: #0095f6;
+  --dot-inactive: #555555;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --input-bg: #262626;
+  --input-border: #363636;
+  --btn-bg: #0095f6;
+  --btn-text: #ffffff;
+}
+
+/* --------------------------------------------------------
+   GLOBAL RESETS
+   -------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+  /* Prevent body scroll, handle internally */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --------------------------------------------------------
+   APP LAYOUT (SPLIT SCREEN)
+   -------------------------------------------------------- */
+.app-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/* --------------------------------------------------------
+   CONTROL PANEL (LEFT)
+   -------------------------------------------------------- */
+.control-panel {
+  width: 400px;
+  background-color: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  padding: 24px;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px var(--shadow-color);
+  z-index: 10;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.panel-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.control-section {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.control-section h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.control-panel label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.control-panel input[type="text"],
+.control-panel textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.control-panel input[type="text"]:focus,
+.control-panel textarea:focus {
+  outline: none;
+  border-color: var(--text-secondary);
+}
+
+.control-panel input[type="file"] {
+  font-size: 0.875rem;
+}
+
+.help-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.btn-upload {
+  border: none;
+  color: var(--btn-text);
+  background-color: var(--btn-bg);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-upload:hover {
+  opacity: 0.9;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.thumb-wrapper {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.file-list img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.file-list img.selected {
+  border-color: var(--btn-bg);
+  transform: scale(1.05);
+}
+
+.replace-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--btn-bg);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid var(--bg-panel);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.replace-badge:hover {
+  background: var(--btn-hover);
+}
+
+.file-list img.drag-over {
+  opacity: 0.5;
+  border-style: dashed;
+}
+
+#image-edit-panel {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+#image-edit-panel h4 {
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slider-group label {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.slider-group input[type="range"] {
+  width: 65%;
+}
+
+#spotify-player-container {
+  margin-top: 8px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.comment-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.comment-inputs input {
+  margin-bottom: 0 !important;
+}
+
+#comment-user {
+  flex: 1;
+}
+
+#comment-text {
+  flex: 2;
+}
+
+#add-comment-btn {
+  background-color: var(--btn-bg);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 36px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#mock-comments-list {
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+#mock-comments-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.remove-comment {
+  color: var(--icon-action);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+}
+
+/* --------------------------------------------------------
+   PREVIEW AREA (RIGHT)
+   -------------------------------------------------------- */
+.preview-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Toggles above the device frame */
+.device-toggles {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background-color: var(--bg-panel);
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.device-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.device-btn:hover {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+}
+
+.device-btn.active {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+/* Wrapper to center and size the mock post */
+.phone-frame-wrapper {
+  width: 470px;
+  /* Default desktop */
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* The actual IG Post Replica Container */
+.replica-container {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  /* IG Desktop usually has light borders, mobile has none. We'll stick to a border for distinction */
+  color: var(--text-primary);
+  font-size: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Make it look like a floating desktop card */
+@media (min-width: 768px) {
+  .replica-container {
+    border-radius: 8px;
+  }
+}
+
+/* --------------------------------------------------------
+   POST REPLICA INTERNALS
+   -------------------------------------------------------- */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+/* Header */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.username-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.location {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.header-time {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.music-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.music-icon {
+  color: var(--text-primary);
+}
+
+.music-text {
+  max-width: 150px;
+}
+
+.more-icon {
+  color: var(--icon-color);
+  cursor: pointer;
+}
+
+/* Media Carousel */
+.post-media-container {
+  width: 100%;
+  position: relative;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: #262626;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.post-media-container:hover .carousel-arrow {
+  opacity: 1;
+}
+
+.carousel-arrow.prev {
+  left: 8px;
+}
+
+.carousel-arrow.next {
+  right: 8px;
+}
+
+.carousel-arrow:disabled {
+  display: none;
+}
+
+[data-theme="dark"] .carousel-arrow {
+  background-color: rgba(38, 38, 38, 0.85);
+  color: #efefef;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Edge */
+}
+
+.carousel-frame {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.carousel-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-placeholder {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+  font-size: 14px;
+  background-color: var(--bg-secondary);
+}
+
+/* Post Bottom / Interactions */
+.post-bottom {
+  padding: 12px 16px;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.action-left {
+  display: flex;
+  gap: 16px;
+}
+
+.action-icon {
+  color: var(--icon-color);
+  cursor: pointer;
+}
+
+.action-icon:hover {
+  opacity: 0.6;
+}
+
+.action-icon.heart:active {
+  color: var(--icon-action);
+}
+
+/* Pagination Dots */
+.carousel-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--dot-inactive);
+  transition: background-color 0.2s ease;
+}
+
+.dot.active {
+  background-color: var(--dot-active);
+}
+
+/* Like info */
+.likes-section {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Caption */
+.caption-section {
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+
+.caption-text {
+  font-weight: 400;
+  white-space: pre-wrap;
+  /* Preserve line breaks from textarea */
+}
+
+/* Comments */
+.comments-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.mock-comment-row {
+  word-wrap: break-word;
+}
+
+/* Timestamp */
+.timestamp {
+  font-size: 10px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}

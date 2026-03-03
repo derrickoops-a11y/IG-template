@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Carousel Previewer</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- LEFT: Control Panel (The Sandbox) -->
+    <aside class="control-panel">
+
+      <div class="panel-header">
+        <h1>Carousel Previewer</h1>
+        <div class="theme-toggle">
+          <label>Dark Mode</label>
+          <input type="checkbox" id="theme-switch">
+        </div>
+      </div>
+
+      <div class="control-section">
+        <h3>Post Data</h3>
+
+        <label>Avatar Image
+          <input type="file" id="input-avatar" accept="image/*">
+        </label>
+
+        <label>Username
+          <input type="text" id="input-username" placeholder="e.g. fawazz_ai" value="fawazz_ai">
+        </label>
+
+        <label>Location (Optional)
+          <input type="text" id="input-location" placeholder="e.g. New York, USA">
+        </label>
+
+        <label>Post Time
+          <input type="text" id="input-time" placeholder="e.g. 1d or 4m" value="2h">
+        </label>
+
+        <label>Audio/Music (Optional)
+          <input type="text" id="input-music" placeholder="e.g. Original Audio or Spotify Link"
+            value="https://open.spotify.com/track/4haJoBPbPj9QFKNpp9e8kx?si=7b1da1894f0346a8">
+        </label>
+
+        <!-- Spotify Customization Panel (Hidden by default) -->
+        <div id="spotify-customization"
+          style="display: none; background: var(--input-bg); padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+          <label style="font-size: 0.8rem; margin-bottom: 8px;">Display Name
+            <input type="text" id="input-music-name" placeholder="E.g. Ivy • Frank Ocean"
+              style="font-size: 0.8rem; padding: 6px;">
+          </label>
+          <label style="font-size: 0.8rem; margin-bottom: 0;">Start Time (seconds)
+            <input type="number" id="input-music-time" placeholder="E.g. 60" min="0"
+              style="font-size: 0.8rem; padding: 6px;">
+          </label>
+        </div>
+
+        <!-- Container for Spotify Embed -->
+        <div id="spotify-player-container"></div>
+
+        <label>Caption
+          <textarea id="input-caption" rows="3" placeholder="Write a caption...">this is so going to be fun</textarea>
+        </label>
+      </div>
+
+      <div class="control-section media-upload-section">
+        <h3>Carousel Images (4:5)</h3>
+        <p class="help-text">Select multiple images or upload an entire folder to create the swipeable carousel.</p>
+        <div class="upload-btn-wrapper" style="margin-right: 8px;">
+          <button class="btn-upload">Select Files</button>
+          <input type="file" id="input-files" multiple accept="image/*">
+        </div>
+        <div class="upload-btn-wrapper">
+          <button class="btn-upload" style="background-color: var(--text-secondary);">Select Folder</button>
+          <input type="file" id="input-folder" webkitdirectory directory multiple accept="image/*">
+        </div>
+        <input type="file" id="input-replace" accept="image/*" style="display: none;">
+        <div id="file-list-preview" class="file-list"></div>
+
+        <!-- Image Edit Panel (Hidden initially) -->
+        <div id="image-edit-panel" style="display: none;">
+          <h4>Edit Image</h4>
+          <div class="slider-group">
+            <label>Pan X
+              <input type="range" id="crop-x" min="0" max="100" value="50">
+            </label>
+            <label>Pan Y
+              <input type="range" id="crop-y" min="0" max="100" value="50">
+            </label>
+            <label>Zoom
+              <input type="range" id="crop-zoom" min="0.1" max="3" step="0.01" value="1">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <h3>Engagement</h3>
+        <label>Likes Text
+          <input type="text" id="input-likes" placeholder="e.g. 1,234 likes" value="1,234 likes">
+        </label>
+
+        <div class="comments-builder">
+          <label>Add Mock Comment</label>
+          <div class="comment-inputs">
+            <input type="text" id="comment-user" placeholder="Username">
+            <input type="text" id="comment-text" placeholder="Comment text">
+            <button id="add-comment-btn">+</button>
+          </div>
+          <ul id="mock-comments-list"></ul>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT: Display Engine (The Replica) -->
+    <main class="preview-area">
+
+      <!-- Device Toggles -->
+      <div class="device-toggles">
+        <button class="device-btn active" data-width="470">Desktop</button>
+        <button class="device-btn" data-width="430">Phone L</button>
+        <button class="device-btn" data-width="375">Phone S</button>
+      </div>
+
+      <div class="phone-frame-wrapper">
+        <div class="replica-container" id="replica-post">
+
+          <!-- Post Header -->
+          <header class="post-header">
+            <div class="header-left">
+              <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar" id="render-avatar">
+              <div class="header-text">
+                <div class="username-row">
+                  <span class="username" id="render-username">fawazz_ai</span>
+                  <span class="header-time" id="render-header-time"> &bull; 2h</span>
+                </div>
+                <div class="location-row" id="render-location-group" style="display: none;">
+                  <span class="location" id="render-location"></span>
+                </div>
+                <div class="music-row" id="render-music-group" style="display: none;">
+                  <svg aria-label="Audio" class="music-icon" fill="currentColor" height="12" role="img"
+                    viewBox="0 0 24 24" width="12">
+                    <path d="M12 2v20M17 6v12M22 10v4M7 6v12M2 10v4"></path>
+                  </svg>
+                  <marquee scrollamount="3" class="music-text" id="render-music"></marquee>
+                </div>
+              </div>
+            </div>
+            <div class="header-right">
+              <svg aria-label="More options" class="more-icon" fill="currentColor" height="24" role="img"
+                viewBox="0 0 24 24" width="24">
+                <circle cx="12" cy="12" r="1.5"></circle>
+                <circle cx="6" cy="12" r="1.5"></circle>
+                <circle cx="18" cy="12" r="1.5"></circle>
+              </svg>
+            </div>
+          </header>
+
+          <!-- Post Media Carousel -->
+          <div class="post-media-container">
+            <button class="carousel-arrow prev" id="carousel-prev" aria-label="Previous">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+              </svg>
+            </button>
+            <div class="carousel-track" id="carousel-track">
+              <!-- Images injected via JS -->
+              <div class="carousel-placeholder">Upload images to preview</div>
+            </div>
+            <button class="carousel-arrow next" id="carousel-next" aria-label="Next">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Post Engagement UI -->
+          <div class="post-bottom">
+            <div class="action-bar">
+              <div class="action-left">
+                <svg aria-label="Like" class="action-icon heart" fill="currentColor" height="24" role="img"
+                  viewBox="0 0 24 24" width="24">
+                  <path
+                    d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.438-.283-1.791-1.509-4.303-3.752C5.152 14.081 2.5 12.194 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.118 1.763s.278-.588 1.118-1.763a4.21 4.21 0 0 1 3.673-1.941Z">
+                  </path>
+                </svg>
+                <svg aria-label="Comment" class="action-icon" fill="currentColor" height="24" role="img"
+                  viewBox="0 0 24 24" width="24">
+                  <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor"
+                    stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+                <svg aria-label="Share" class="action-icon" fill="currentColor" height="24" role="img"
+                  viewBox="0 0 24 24" width="24">
+                  <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218"
+                    y1="3" y2="10.083"></line>
+                  <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
+                    stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
+                </svg>
+              </div>
+              <div class="carousel-dots" id="carousel-dots">
+                <!-- Dots injected via JS -->
+              </div>
+              <div class="action-right">
+                <svg aria-label="Save" class="action-icon" fill="currentColor" height="24" role="img"
+                  viewBox="0 0 24 24" width="24">
+                  <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                </svg>
+              </div>
+            </div>
+
+            <div class="likes-section">
+              <span class="likes-text" id="render-likes">1,234 likes</span>
+            </div>
+
+            <div class="caption-section" id="render-caption-group">
+              <span class="username" id="render-caption-username">fawazz_ai</span>
+              <span class="caption-text" id="render-caption">this is so going to be fun</span>
+            </div>
+
+            <div class="comments-section" id="render-comments-group">
+              <!-- Injected mock comments -->
+            </div>
+
+            <div class="timestamp">
+              <span>2 HOURS AGO</span>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
