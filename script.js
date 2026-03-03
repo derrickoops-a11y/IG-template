@@ -115,13 +115,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputMusicName = document.getElementById('input-music-name');
   const inputMusicTime = document.getElementById('input-music-time');
 
-  function updateSpotifyEmbed() {
+  // Music sticker elements
+  const musicSticker = document.getElementById('music-sticker');
+  const stickerThumb = document.getElementById('sticker-thumb');
+  const stickerSong = document.getElementById('sticker-song');
+  const stickerArtist = document.getElementById('sticker-artist');
+
+  // Cache for oEmbed results to avoid re-fetching
+  let oEmbedCache = {};
+
+  async function fetchSpotifyInfo(trackUrl) {
+    if (oEmbedCache[trackUrl]) return oEmbedCache[trackUrl];
+    try {
+      const resp = await fetch(`https://open.spotify.com/oembed?url=${encodeURIComponent(trackUrl)}`);
+      if (!resp.ok) throw new Error('oEmbed failed');
+      const data = await resp.json();
+      // data.title is typically "Song Name - Artist"
+      const parts = data.title.split(' - ');
+      const songName = parts[0] || data.title;
+      const artistName = parts.length > 1 ? parts.slice(1).join(' - ') : '';
+      const result = {
+        song: songName.trim(),
+        artist: artistName.trim(),
+        thumbnail: data.thumbnail_url || '',
+        title: data.title
+      };
+      oEmbedCache[trackUrl] = result;
+      return result;
+    } catch (e) {
+      console.warn('Spotify oEmbed fetch failed:', e);
+      return null;
+    }
+  }
+
+  function updateMusicSticker(info) {
+    if (!info) {
+      musicSticker.classList.remove('visible');
+      return;
+    }
+    stickerSong.textContent = info.song;
+    stickerArtist.textContent = info.artist;
+    if (info.thumbnail) {
+      stickerThumb.src = info.thumbnail;
+      stickerThumb.style.display = 'block';
+    } else {
+      stickerThumb.style.display = 'none';
+    }
+    musicSticker.classList.add('visible');
+  }
+
+  async function updateSpotifyEmbed() {
     const val = inputMusic.value.trim();
     if (!val) {
       spotifyContainer.innerHTML = '';
       spotifyCustomization.style.display = 'none';
       renderMusicGroup.style.display = 'none';
       renderMusic.textContent = '';
+      updateMusicSticker(null);
       return;
     }
 
@@ -153,14 +203,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       iframe.src = src;
 
-      const name = inputMusicName.value.trim() || "Ivy";
-      const artist = "Frank Ocean";
-      renderMusic.innerHTML = `<span class="music-note-icon">♫</span> ${name} &bull; ${artist}`;
+      // Auto-fetch song info from Spotify oEmbed API
+      const trackUrl = `https://open.spotify.com/track/${trackId}`;
+      const info = await fetchSpotifyInfo(trackUrl);
+
+      if (info) {
+        // Use the Display Name override if provided, otherwise use auto-fetched
+        const displayOverride = inputMusicName.value.trim();
+        if (displayOverride) {
+          renderMusic.innerHTML = `<span class="music-note-icon">♫</span> ${displayOverride}`;
+        } else {
+          const displayText = info.artist ? `${info.song} \u2022 ${info.artist}` : info.song;
+          renderMusic.innerHTML = `<span class="music-note-icon">♫</span> ${displayText}`;
+        }
+        // Update the music sticker overlay
+        updateMusicSticker(info);
+      } else {
+        const name = inputMusicName.value.trim() || "Unknown Track";
+        renderMusic.innerHTML = `<span class="music-note-icon">♫</span> ${name}`;
+        updateMusicSticker(null);
+      }
     } else {
       spotifyContainer.style.display = 'none';
       spotifyCustomization.style.display = 'none';
       renderMusicGroup.style.display = 'flex';
       renderMusic.innerHTML = `<span class="music-note-icon">♫</span> ${val}`;
+      updateMusicSticker(null);
     }
   }
 
