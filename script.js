@@ -569,20 +569,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Initialization ---
   function initDefaults() {
     // Hardcoded avatar
-    renderAvatar.src = 'images/avatar.jpg';
+    renderAvatar.src = 'avatar.jpg';
 
     // Hardcoded carousel images from the images/ folder
     const defaultImages = [
-      'images/numba1.webp',
-      'images/numba2.jpg',
-      'images/numba3.jpg',
-      'images/numba4.jpg',
-      'images/numba5.gif',
-      'images/numba6.jpg',
-      'images/numba7.jpg',
-      'images/numba8.jpg',
-      'images/numba9.jpg',
-      'images/numba10.jpg'
+      'numba1.webp',
+      'numba2.jpg',
+      'numba3.jpg',
+      'numba4.jpg',
+      'numba5.gif',
+      'numba6.jpg',
+      'numba7.jpg',
+      'numba8.jpg',
+      'numba9.jpg',
+      'numba10.jpg'
     ];
 
     if (carouselImages.length === 0) {
