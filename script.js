@@ -569,20 +569,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Initialization ---
   function initDefaults() {
     // Hardcoded avatar
-    // renderAvatar.src = 'avatar.jpg'; // Will be uploaded later
+    // Hardcoded avatar from Google Drive
+    renderAvatar.src = 'https://lh3.googleusercontent.com/d/10mb0aJfI1OIf3pkOl-OnQa3GO86wrNaP';
 
-    // Hardcoded carousel images from the images/ folder
+    // Hardcoded carousel images from Google Drive
     const defaultImages = [
-      'numba1.webp',
-      'numba3.jpg',
-      'Numba4.jpg',
-      'numba5.jpg',
-      '19e2e94252dc6ef97a49064b31321b9a.jpg',
-      'Numba6.gif',
-      'numba7.jpg',
-      'numba8.jpg',
-      'numba9.jpg',
-      'numba10.jpg'
+      'https://lh3.googleusercontent.com/d/1EdwY6iVVdhatiDdCp8btYqSWEneycSM0',
+      'https://lh3.googleusercontent.com/d/1V3HIlGlFYS865NDJZDnPGLsSUpb3SenP',
+      'https://lh3.googleusercontent.com/d/1vAFXul_22sWKFSdqtLgD8Smvzcofo-s2',
+      'https://lh3.googleusercontent.com/d/11LVNV-KLR70ByJn9HLm9dO_lNPZPGK7_',
+      'https://lh3.googleusercontent.com/d/1nFvb8n0S7SUwyJh48Rjt8dICloivXfJj',
+      'https://lh3.googleusercontent.com/d/1zdKIL7a3h1SB1jkBDtQRb9KwIN2PLJLc',
+      'https://lh3.googleusercontent.com/d/1cedLIp7dVyNUXZW3BKLI6swYDQm-uAdu',
+      'https://lh3.googleusercontent.com/d/1lk6tkZZlX46xFxJKXWQsEP-JGxWIEnxC',
+      'https://lh3.googleusercontent.com/d/1N4tdxdCWSBFaojREdMGd7sft71pPAcN4',
+      'https://lh3.googleusercontent.com/d/1aTKtbaBohCu-uyDXJi4nTHTMGGDdW9JK'
     ];
 
     if (carouselImages.length === 0) {
