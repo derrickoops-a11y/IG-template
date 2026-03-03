@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 PORT = 3001
 
 # Constants for default paths (User-specified)
-DEFAULT_CAROUSEL_FOLDER = r"C:\Users\fawazishola\Downloads\DUMP Pre DUC-20260303T120159Z-3-001\DUMP Pre DUC"
+DEFAULT_CAROUSEL_FOLDER = r"C:\Users\fawazishola\Downloads\DUMP Pre DUC-20260303T131713Z-3-001\DUMP Pre DUC"
 DEFAULT_AVATAR_PATH = r"C:\Users\fawazishola\Downloads\IMG-20250527-WA0002(1).jpg"
 
 def get_base64_image(filepath):

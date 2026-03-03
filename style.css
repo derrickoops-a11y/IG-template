@@ -474,7 +474,7 @@ a {
 
 .header-time {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: #8e8e8e;
   font-weight: 400;
 }
 
@@ -483,15 +483,21 @@ a {
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  margin-top: 2px;
-}
-
-.music-icon {
+  margin-top: -2px;
   color: var(--text-primary);
 }
 
+.music-note-icon {
+  font-size: 10px;
+  line-height: 1;
+}
+
 .music-text {
-  max-width: 150px;
+  font-weight: 400;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .more-icon {
