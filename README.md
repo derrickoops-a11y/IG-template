@@ -1,13 +1,13 @@
 # Instagram Carousel Previewer
-A local web tool for previewing Instagram-style carousel posts. Customize the avatar, username, location, caption, comments, and carousel images — then see a live replica of how the post will look on Instagram.
+A local web tool for previewing Instagram-style carousel posts. Customize the avatar, username, location, caption, comments, and carousel images  then see a live replica of how the post will look on Instagram.
 ## Features
-- **Carousel Preview** — Upload multiple images to create a swipeable carousel with 4:5 aspect ratio
-- **Post Customization** — Set avatar, username, location, post time, caption, and likes
-- **Mock Comments** — Add mock comments to preview engagement
-- **Spotify Integration** — Attach a Spotify track link to display music info on the post
-- **Image Editing** — Pan, zoom, and crop individual carousel images
-- **Dark Mode** — Toggle between light and dark themes
-- **Responsive Device Previews** — Switch between Desktop, Phone L, and Phone S frame sizes
+- **Carousel Preview**  Upload multiple images to create a swipeable carousel with 4:5 aspect ratio
+- **Post Customization**  Set avatar, username, location, post time, caption, and likes
+- **Mock Comments**  Add mock comments to preview engagement
+- **Spotify Integration**  Attach a Spotify track link to display music info on the post
+- **Image Editing**  Pan, zoom, and crop individual carousel images
+- **Dark Mode**  Toggle between light and dark themes
+- **Responsive Device Previews**  Switch between Desktop, Phone L, and Phone S frame sizes
 ## Getting Started
 ### Prerequisites
 - [Python 3](https://www.python.org/downloads/)
@@ -33,12 +33,12 @@ A local web tool for previewing Instagram-style carousel posts. Customize the av
 | `index.html` | Main HTML page with the control panel and post preview   |
 | `style.css`  | Styling with CSS variables for light and dark themes     |
 | `script.js`  | Client-side logic for carousel, media handling, and UI   |
-| `server.py`  | Python HTTP server for serving files and the defaults API |
+| `server.py`  | Python HTTP server for serving files and the defaults API|
 ## Usage
-1. **Upload Images** — Use "Select Files" or "Select Folder" in the control panel to add carousel images.
-2. **Customize the Post** — Fill in the username, location, caption, likes, and other fields.
-3. **Preview** — The right-hand panel updates in real time to show the Instagram-style post.
-4. **Switch Devices** — Use the Desktop / Phone L / Phone S buttons to preview at different widths.
-5. **Toggle Theme** — Use the Dark Mode switch to preview in light or dark mode.
+1. **Upload Images**  Use "Select Files" or "Select Folder" in the control panel to add carousel images.
+2. **Customize the Post**  Fill in the username, location, caption, likes, and other fields.
+3. **Preview**  The right-hand panel updates in real time to show the Instagram-style post.
+4. **Switch Devices**  Use the Desktop / Phone L / Phone S buttons to preview at different widths.
+5. **Toggle Theme**  Use the Dark Mode switch to preview in light or dark mode.
 ## License
 This project is provided as-is for personal and educational use.
