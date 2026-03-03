@@ -1,5 +1,8 @@
 # Instagram Carousel Previewer
-A local web tool for previewing Instagram-style carousel posts. Customize the avatar, username, location, caption, comments, and carousel images  then see a live replica of how the post will look on Instagram.
+
+A web tool for previewing Instagram-style carousel posts. Customize the avatar, username, location, caption, comments, and carousel images  then see a live replica of how the post will look on Instagram.
+
+**Live Site:** [https://derrickoops-a11y.github.io/IG-template/](https://derrickoops-a11y.github.io/IG-template/)
 ## Features
 - **Carousel Preview**  Upload multiple images to create a swipeable carousel with 4:5 aspect ratio
 - **Post Customization**  Set avatar, username, location, post time, caption, and likes
@@ -9,7 +12,14 @@ A local web tool for previewing Instagram-style carousel posts. Customize the av
 - **Dark Mode**  Toggle between light and dark themes
 - **Responsive Device Previews**  Switch between Desktop, Phone L, and Phone S frame sizes
 ## Getting Started
-### Prerequisites
+
+### Online
+
+Visit the live site at [https://derrickoops-a11y.github.io/IG-template/](https://derrickoops-a11y.github.io/IG-template/) — no installation required. Upload your images directly through the browser UI.
+
+### Local Development
+
+#### Prerequisites
 - [Python 3](https://www.python.org/downloads/)
 - A modern web browser
 ### Running the App
